@@ -1,12 +1,9 @@
-import React from "react";
+import Popup from "./components/Extension";
 
-// React.FC => React functional component
-const Popup: React.FC = () => {
-  return <>
-    <div className="bg-gray-700 w-[350px] relative p-4">
-        Hi there
-    </div>
-  </>
+export default function App(){
+  return(
+    <>
+      <Popup/> 
+    </>
+  )
 }
-
-export default Popup;
