@@ -1,34 +1,27 @@
-require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const cron = require('node-cron');
 const cors = require('cors');
-const { fetchInbox } = require('./services/mailservice');
-const mailRoutes = require('./routes/mailRoutes');
+import mailRouter from "./routes/mailRoutes";
+
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-    origin: '*', // Allow all origins (for testing)
-    methods: ['GET', 'POST', 'OPTIONS'], // Allow specific methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allow specific headers
+    origin: '*', 
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }));
-app.use(express.json());
-app.use('/api', mailRoutes);
 
-mongoose.connect(process.env.MONGODB_URI)//connect to mongodb atlas
+app.use(express.json());
+app.use('/api', mailRouter);
+
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Connected to MongoDB Atlas');
+})
 
-    // it polls after 30 seconddss
-    cron.schedule('*/30 * * * * *', async () => {
-      console.log('Polling inbox...');
-      await fetchInbox();
-    });
-
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
-    });
-  })
-  .catch(err => console.error('MongoDB connection error:', err));
+app.listen(PORT, () => {
+    console.log(`Server running on port: ${PORT}`);
+});

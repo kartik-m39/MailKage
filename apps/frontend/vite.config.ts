@@ -7,4 +7,14 @@ import manifest from './manifest.json'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(),tailwindcss(), crx({ manifest })],
+  build: {
+    // Disable HMR for Chrome extension builds
+    watch: null,
+    // Ensure HMR code is not included in production builds
+    minify: true,
+  },
+  // Disable server options for extensions
+  server: {
+    hmr: false
+  }
 })

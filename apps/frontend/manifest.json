@@ -5,5 +5,11 @@
     "manifest_version": 3,
     "action": {
       "default_popup": "index.html"
-    }
+    },
+    "permissions": [
+      "activeTab"
+    ],
+    "host_permissions": [
+      "http://localhost:*/*"
+    ]
   }

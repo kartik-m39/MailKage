@@ -12,8 +12,9 @@ const CopyIcon: React.FC<CopyIconProps> = ({ onClick }: CopyIconProps) => {
       viewBox="0 0 24 24"
       strokeWidth="1.5"
       stroke="currentColor"
-        width="20"  // Explicit width in pixels
-        height="20" // Explicit height in pixels
+      height="20" // Explicit height in pixels
+      color="gray"
+      width="20"  // Explicit width in pixels
       onClick={onClick}
     >
       <path

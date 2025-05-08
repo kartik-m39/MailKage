@@ -18,6 +18,7 @@ const RefreshButton: React.FC<RefreshButtonProps> = ({
     // className="size-6"
     width= "20"
     height= "20"
+    color="gray"
     onClick={onClick}
   >
     <path

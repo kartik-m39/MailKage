@@ -8,4 +8,6 @@ const mailSchema = new mongoose.Schema({
   receivedAt: Date,
 });
 
-module.exports = mongoose.model('Mail', mailSchema);
+const Mail = mongoose.model("mail", mailSchema);
+
+module.exports = Mail;
