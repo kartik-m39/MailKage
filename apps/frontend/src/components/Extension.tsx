@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import RefreshButton from "../../../../packages/ui/src/RefreshButton";
 import CopyIcon from "../../../../packages/ui/src/CopyIcon"
 import copy from "copy-to-clipboard";
@@ -21,7 +21,7 @@ type inboxItem = {
 const Popup: React.FC = () => {
 
   const [tempmail, setTempMail] = useState<string>("");
-  const [inbox, setInbox] = useState<inboxItem[]>();
+  const [inbox, setInbox] = useState<inboxItem[]>([]);
   
   const [loading, setLoading] = useState(false);
   const [inboxMsg, setInboxMsg] = useState(false);
@@ -32,7 +32,8 @@ const Popup: React.FC = () => {
       setLoading(true);
         const response = await fetch(baseUrl + "/api/generate");
         const data = await response.json()
-        console.log(data);
+        localStorage.removeItem("inboxVal");
+        setInbox([])
         setTempMail(data.email);
         setLoading(false);
     } catch(err){
@@ -45,7 +46,6 @@ const Popup: React.FC = () => {
           setInboxMsg(true)
           const response = await fetch(baseUrl + "/api/inbox");
           const data = await response.json();
-          // setInbox(prev => [...prev, ...data.inbox])
           setInbox(data.inbox)
           setInboxMsg(false)
       } catch(err){
@@ -62,9 +62,24 @@ const Popup: React.FC = () => {
     }
   }
 
-  // useEffect(() => {
-  //   getTempMail()
-  // }, []);
+  useEffect(() => {
+    const mail = localStorage.getItem("tempmailValue");
+    const inbox = localStorage.getItem("inboxVal");
+    if(mail !== null){
+       setTempMail(mail);
+    }
+
+    if(inbox !== null){
+      setInbox(JSON.parse(inbox))
+    }
+  }, []);
+
+  useEffect(() => {
+    if(tempmail || inbox){
+      localStorage.setItem("tempmailValue", tempmail)
+      localStorage.setItem("inboxVal", JSON.stringify(inbox))
+    }
+  }, [tempmail, inbox])
 
   return (
     <div className="bg-gray-900 overflow-hidden border border-gray-800 shadow-lg w-[450px]">
