@@ -132,7 +132,7 @@ const Popup: React.FC = () => {
               {inbox.map((email, index) => (
                 <div 
                   key={email._id || index} 
-                  className="p-3 border-b border-gray-700 hover:bg-gray-750 cursor-pointer transition-colors"
+                  className="p-3 border-b border-gray-700 hover:bg-gray-750 transition-colors"
                 >
                   <div className="flex items-center justify-between mb-1">
                     <div className="font-medium text-gray-300 truncate">{email.from}</div>
